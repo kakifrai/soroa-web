@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>使い方 - 影差し</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: linear-gradient(-45deg, #1a1a1a, #202020, #1c1c1c, #252525);
+      background-size: 400% 400%;
+      animation: bgShift 40s ease infinite;
+      color: #f0f0f0;
+      font-family: "Yu Gothic", sans-serif;
+      margin: 0;
+      padding: 2rem 1rem 4rem;
+    }
+
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeInDown 1.5s ease-out forwards;
+    }
+
+    .content {
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.8;
+      font-size: 1.05rem;
+      background-color: #1e1e1e;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      opacity: 0;
+      animation: fadeInUp 1.6s ease-out forwards;
+      animation-delay: 0.6s;
+    }
+
+    .content p {
+      margin-bottom: 1.2rem;
+    }
+
+    ul {
+      padding-left: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    ul li {
+      margin-bottom: 0.8rem;
+    }
+
+    @keyframes fadeInDown {
+      0% { transform: translateY(-20px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      0% { transform: translateY(20px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    .menu-toggle {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .menu-toggle div {
+      width: 25px;
+      height: 3px;
+      background-color: #fff;
+      margin: 5px 0;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -200px;
+      width: 200px;
+      height: 100%;
+      background-color: #2a2a2a;
+      padding-top: 60px;
+      transition: 0.3s;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: #f0f0f0;
+      font-size: 1rem;
+    }
+
+    .sidebar a:hover {
+      background-color: #444;
+    }
+
+
+    @media screen and (max-width: 600px) {
+  h1 {
+    font-size: 1.4rem;
+    margin-top: 3rem;
+  }
+
+  .content {
+    font-size: 0.95rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .menu-toggle {
+    top: 0.8rem;
+    left: 0.8rem;
+  }
+
+  .menu-toggle div {
+    width: 22px;
+    height: 2.5px;
+  }
+
+  .sidebar {
+    width: 180px;
+    padding-top: 50px;
+  }
+
+  .sidebar a {
+    font-size: 0.95rem;
+    padding: 10px 18px;
+  }
+
+  details summary {
+    font-size: 0.95rem;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- ハンバーガーメニュー -->
+  <div class="menu-toggle" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <!-- サイドバー -->
+  <div class="sidebar" id="sidebarMenu">
+    <a href="home.html">🏠 ホーム</a>
+    <a href="write.html">🖋️ 言葉を置く</a>
+    <a href="read.html">👁️ 誰かの影を見る</a>
+    <a href="sleep.html">🌙 眠り箱</a>
+    <details style="margin-top: 1rem; padding: 0 1rem; color: #eee;">
+      <summary style="cursor: pointer;">📁 その他</summary>
+      <ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;">
+        <li><a href="about.html" style="color: #aaa;">はじめに</a></li>
+        <li><a href="howto.html" style="color: #aaa;">使い方ガイド</a></li>
+        <li><a href="hidden.html" style="color: #aaa;">非表示投稿一覧</a></li>
+        <li><a href="terms.html" style="color: #aaa;">利用規約・注意事項</a></li>
+
+      </ul>
+    </details>
+  </div>
+
+  <h1>影差しの使い方</h1>
+
+  <div class="content">
+    <p>このアプリでは、言葉にならない気持ちを匿名でそっと置いていくことができます。</p>
+
+    <ul>
+      <li><strong>🖋️ 言葉を置く：</strong> ふと思ったこと、抱えている感情を文章として投稿できます。</li>
+      <li><strong>👁️ 誰かの影を見る：</strong> 他の誰かが残した言葉を読んで、共感や安心を感じることができます。</li>
+      <li><strong>🌙 眠り箱：</strong> 気になった投稿を「そっとしまっておく」ことができます。あとで読み返せます。</li>
+      <li><strong>🚫 非表示投稿一覧：</strong> 自分の判断で非表示にした投稿の管理ができます。再表示や完全削除も可能です。</li>
+    </ul>
+
+    <p>評価やコメント機能はなく、<strong>ただ見る・ただ置く</strong>だけのシンプルな場所です。<br>
+    どうか、あなたが心を休められますように。</p>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("sidebarMenu").classList.toggle("open");
+    }
+  </script>
+
+</body>
+</html>

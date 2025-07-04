@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>眠り箱 - 影差し</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #121212;
+      color: #f0f0f0;
+      font-family: "Yu Gothic", sans-serif;
+      margin: 0;
+      padding: 2rem 1rem 1rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      animation: fadeIn 2s ease-in;
+      position: relative;
+      z-index: 1;
+    }
+
+    .post-card {
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      padding: 1rem;
+      margin: 1.2rem auto;
+      max-width: 600px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      position: relative;
+      transition: transform 0.3s ease;
+      animation: floatCard 6s ease-in-out infinite;
+      z-index: 1;
+    }
+
+    .post-card:hover {
+      transform: scale(1.01);
+    }
+
+    .post-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1rem;
+      gap: 0.5rem;
+    }
+
+    .post-actions button {
+      background-color: #444;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      padding: 0.4rem 0.8rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    .post-actions button:hover {
+      background-color: #666;
+    }
+
+    .menu-toggle {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .menu-toggle div {
+      width: 25px;
+      height: 3px;
+      background-color: #fff;
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -200px;
+      width: 200px;
+      height: 100%;
+      background-color: #2a2a2a;
+      padding-top: 60px;
+      transition: 0.3s;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: #f0f0f0;
+      font-size: 1rem;
+    }
+
+    .sidebar a:hover {
+      background-color: #444;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    @media screen and (max-width: 600px) {
+      h1 {
+        padding-top: 3.5rem;
+      }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatCard {
+      0%, 100% {
+        transform: translateY(0px);
+        opacity: 0.9;
+      }
+      50% {
+        transform: translateY(-6px);
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ハンバーガーメニュー -->
+  <div class="menu-toggle" id="menuToggle">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <!-- サイドバー -->
+  <div class="sidebar" id="sidebarMenu">
+    <a href="home.html">🏠 ホーム</a>
+    <a href="write.html">🖋️ 言葉を置く</a>
+    <a href="read.html">👁️ 誰かの影を見る</a>
+    <a href="sleep.html">🌙 眠り箱</a>
+    <details style="margin-top: 1rem; padding: 0 1rem; color: #eee;">
+      <summary style="cursor: pointer; font-size: 1rem;">📁 その他</summary>
+      <ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;">
+        <li><a href="about.html" style="color: #aaa;">はじめに</a></li>
+        <li><a href="howto.html" style="color: #aaa;">使い方ガイド</a></li>        
+        <li><a href="hidden.html" style="color: #aaa; font-size: 0.95rem; text-decoration: none;">非表示投稿一覧</a></li>
+        <li><a href="terms.html" style="color: #aaa; font-size: 0.95rem; text-decoration: none;">利用規約・注意事項</a></li>
+      </ul>
+    </details>
+  </div>
+
+  <h1>眠り箱にしまった言葉たち</h1>
+  <div id="sleepBoxContainer"></div>
+
+  <!-- ✅ Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+
+  <!-- ✅ 共通モジュール＋ sleep.js -->
+  <script type="module">
+    import { firebaseConfig } from './common.js';
+    import './sleep.js';
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <!-- カスタム確認ダイアログ -->
+  <div id="customConfirmOverlay" style="display: none; position: fixed; z-index: 9999; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.65); backdrop-filter: blur(4px); justify-content: center; align-items: center;">
+    <div style="background: linear-gradient(145deg, #2b2b2b, #212121); padding: 2rem 2.5rem; border-radius: 12px; text-align: center; color: #eee; max-width: 320px; box-shadow: 0 8px 20px rgba(0,0,0,0.6); font-family: 'Yu Gothic', sans-serif;">
+      <div id="customConfirmMessage" style="margin-bottom: 1.5rem; font-size: 1.1rem; font-weight: 600; line-height: 1.4;">本当に実行しますか？</div>
+      <button id="customConfirmYes" style="margin-right: 1rem; padding: 0.5rem 1.5rem; background-color: #4a90e2; border: none; border-radius: 6px; color: white; font-weight: 600; cursor: pointer; transition: background-color 0.25s ease; box-shadow: 0 4px 8px rgba(74,144,226,0.4);" onmouseover="this.style.backgroundColor='#357ABD'" onmouseout="this.style.backgroundColor='#4a90e2'">はい</button>
+      <button id="customConfirmNo" style="padding: 0.5rem 1.5rem; background-color: #555555; border: none; border-radius: 6px; color: #ddd; font-weight: 600; cursor: pointer; transition: background-color 0.25s ease; box-shadow: 0 4px 8px rgba(85,85,85,0.3);" onmouseover="this.style.backgroundColor='#777777'" onmouseout="this.style.backgroundColor='#555555'">いいえ</button>
+    </div>
+  </div>
+
+  <!-- 通知表示 -->
+  <div id="notification"></div>
+
+  <!-- ✅ メニュー開閉制御スクリプト -->
+  <script>
+    function toggleMenu() {
+      document.getElementById("sidebarMenu").classList.toggle("open");
+    }
+
+    // ページ読み込み時に常にメニューを閉じる
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("sidebarMenu")?.classList.remove("open");
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>言葉を置く - 影差し</title>
+  <style>
+    body {
+      background-color: #1a1a1a;
+      color: #f0f0f0;
+      font-family: "Yu Gothic", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 1rem;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      animation: fadeIn 1.5s ease-out;
+    }
+    textarea {
+      width: 90%;
+      max-width: 500px;
+      height: 200px;
+      padding: 1rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #2a2a2a;
+      color: #fff;
+      resize: none;
+      font-size: 1rem;
+      line-height: 1.5;
+      animation: floatCard 6s ease-in-out infinite;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.5rem 1.5rem;
+      font-size: 1rem;
+      background: linear-gradient(to right, #4a4a88, #6a88f0);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: linear-gradient(to right, #6a88f0, #4a4a88);
+    }
+    .resonance {
+      margin-top: 2rem;
+      max-width: 500px;
+      font-style: italic;
+      opacity: 0.8;
+      animation: fadeIn 1.5s ease;
+    }
+    .nav-buttons {
+      margin-top: 2rem;
+      display: flex;
+      gap: 1rem;
+    }
+    .nav-buttons button {
+      background-color: #333;
+      font-size: 0.9rem;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes floatCard {
+      0%, 100% {
+        transform: translateY(0px);
+        opacity: 0.9;
+      }
+      50% {
+        transform: translateY(-6px);
+        opacity: 1;
+      }
+    }
+
+    
+
+     /* ハンバーガーメニュー */
+    .menu-toggle {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    .menu-toggle div {
+      width: 25px;
+      height: 3px;
+      background-color: #fff;
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -200px;
+      width: 200px;
+      height: 100%;
+      background-color: #2a2a2a;
+      padding-top: 60px;
+      transition: 0.3s;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+    
+
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: #f0f0f0;
+      font-size: 1rem;
+    }
+
+    .sidebar a:hover {
+      background-color: #444;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+        
+    details summary {
+      font-size: 0.85rem;
+      padding: 0.4rem 0;
+      color: #ccc;
+    }
+
+    details .content-wrapper {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+      font-size: 0.8rem;
+      line-height: 1.4;
+      margin-left: 0.5rem;
+    }
+
+
+    details ul {
+      margin: 0.4rem 0 0 1rem;
+      padding: 0;
+      list-style-type: disc;
+    }
+
+    details li {
+      margin-bottom: 0.3rem;
+    }
+
+
+    details .content-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+
+
+
+  </style>
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+<!-- ハンバーガーボタン -->
+  <div class="menu-toggle" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+    <div id="notification"></div>
+
+  <!-- サイドバー -->
+  <nav class="sidebar" id="sidebarMenu" aria-label="メインメニュー">
+  <a href="home.html">🏠 ホーム</a>
+  <a href="write.html">🖋️ 言葉を置く</a>
+  <a href="read.html">👁️ 誰かの影を見る</a>
+  <a href="sleep.html">🌙 眠り箱</a>
+
+  <!-- 折りたたみ式「その他」 -->
+   <details style="margin-top: 1rem; padding: 0 1rem; color: #eee;">
+      <summary style="cursor: pointer;">📁 その他</summary>
+      <ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;">
+        <li><a href="about.html" style="color: #aaa;">はじめに</a></li>
+        <li><a href="howto.html" style="color: #aaa;">使い方ガイド</a></li>
+        <li><a href="hidden.html" style="color: #aaa;">非表示投稿一覧</a></li>
+        <li><a href="terms.html" style="color: #aaa;">利用規約・注意事項</a></li>
+
+      </ul>
+    </details>
+  </div>
+  </nav>
+
+ <script>
+    function toggleMenu() {
+      document.getElementById("sidebarMenu").classList.toggle("open");
+    }
+ 
+
+   </script>
+  <h1>いまの気持ちを、そっと置いてください。</h1>
+  
+      <details style="margin-top: 0.7rem; color: #ccc; font-size: 0.85rem;">
+  <summary style="cursor:pointer;">📜 投稿ルールとマナーを見る</summary>
+  <div class="content-wrapper">
+    <ul style="margin-top: 0.5rem;">
+      <li>配慮のある言葉遣いを心掛けてください。</li>
+      <li>個人が特定される内容は投稿しないでください。</li>
+      <li>投稿は300文字以内にしてください。</li>
+      <li>連投は1分以上あけてください。</li>
+    </ul>
+  </div>
+</details>
+
+<details style="margin-top: 1rem; font-size: 0.85rem; color: #ccc;">
+  <summary style="cursor: pointer;">🚫 禁止されている表現を見る</summary>
+  <div class="content-wrapper">
+    <p style="margin-top: 0.5rem;">
+      以下の言葉はスパム・荒らし・暴力的または差別的な表現と見なされ、投稿できません。
+    </p>
+    <ul id="bannedWordsList" style="margin-left: 1rem;">
+      <!-- JSで禁止語リストを入れる -->
+    </ul>
+  </div>
+</details>
+
+
+
+  <textarea id="postText" placeholder="例：誰にも言えないけど、苦しい夜です"></textarea>
+  <button>そっと置く</button>
+  
+  <div id="warning" style="color: red; display: none;">⚠️ 個人情報が含まれている可能性があります。投稿できません。</div>
+
+
+  <div class="nav-buttons">
+   
+    <button onclick="location.href='home.html'">ホームへ戻る</button>
+  </div>
+
+  <div class="resonance" id="resonanceBox"></div>
+<!-- ✅ v9互換版 Firebase App -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+
+<!-- ✅ v9互換版 Firestore -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<!-- head内やbody末尾に -->
+<script type="module" src="write.js"></script>
+
+
+</body>
+</html>

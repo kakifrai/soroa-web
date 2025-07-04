@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>影差し ホーム</title>
+  <style>
+    body {
+      background: linear-gradient(-45deg, #1a1a1a, #202020, #1c1c1c, #252525);
+      background-size: 400% 400%;
+      animation: bgShift 40s ease infinite;
+      color: #f0f0f0;
+      font-family: "Yu Gothic", sans-serif;
+      margin: 0;
+      padding: 1rem;
+      min-height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-top: 3.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      animation: fadeInUp 1.2s ease forwards;
+      opacity: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .button-group {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      max-width: 500px;
+      padding: 1rem 1rem 3rem;
+      gap: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .big-button1, .big-button2 {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: white;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(67, 100, 247, 0.3);
+      transition: background 0.3s ease, transform 0.2s ease;
+      height: 45%;
+    }
+
+    .big-button1 {
+      background: linear-gradient(145deg, #4a4a88, #80d42d);
+    }
+
+    .big-button2 {
+      background: linear-gradient(145deg, #e72c0b, #80d42d);
+    }
+
+    .big-button1:hover, .big-button2:hover {
+      background: linear-gradient(145deg, #6a88f0, #4a4a88);
+      transform: scale(1.02);
+    }
+
+    @media (max-height: 600px) {
+      .big-button {
+        font-size: 1.1rem;
+        padding: 1rem;
+      }
+    }
+
+    /* ハンバーガーメニュー */
+    .menu-toggle {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .menu-toggle div {
+      width: 25px;
+      height: 3px;
+      background-color: #fff;
+      margin: 5px 0;
+      transition: 0.3s;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -200px;
+      width: 200px;
+      height: 100%;
+      background-color: #2a2a2a;
+      padding-top: 60px;
+      transition: 0.3s;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: #f0f0f0;
+      font-size: 1rem;
+    }
+
+    .sidebar a:hover {
+      background-color: #444;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ハンバーガーメニュー -->
+  <div class="menu-toggle" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <!-- サイドバー -->
+  <div class="sidebar" id="sidebarMenu">
+    <a href="home.html">🏠 ホーム</a>
+    <a href="write.html">🖋️ 言葉を置く</a>
+    <a href="read.html">👁️ 誰かの影を見る</a>
+    <a href="sleep.html">🌙 眠り箱</a>
+    <details style="margin-top: 1rem; padding: 0 1rem; color: #eee;">
+      <summary style="cursor: pointer;">📁 その他</summary>
+      <ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;">
+        <li><a href="about.html" style="color: #aaa;">はじめに</a></li>
+        <li><a href="howto.html" style="color: #aaa;">使い方ガイド</a></li>
+        <li><a href="hidden.html" style="color: #aaa;">非表示投稿一覧</a></li>
+        <li><a href="terms.html" style="color: #aaa;">利用規約・注意事項</a></li>
+  
+      </ul>
+    </details>
+  </div>
+  <h1>影差し - ホーム</h1>
+
+  <!-- メインボタンエリア -->
+  <div class="button-group">
+    <button class="big-button1" onclick="location.href='write.html'">言葉を置く</button>
+    <button class="big-button2" onclick="location.href='read.html'">誰かの影を見る</button>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("sidebarMenu").classList.toggle("open");
+    }
+
+    // ページ読み込み時にメニューを閉じる（他ページの開き状態をリセット）
+    document.addEventListener("DOMContentLoaded", () => {
+      document.getElementById("sidebarMenu")?.classList.remove("open");
+    });
+  </script>
+
+</body>
+</html>

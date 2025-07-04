@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>はじめに - 影差し</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: linear-gradient(-45deg, #1a1a1a, #202020, #1c1c1c, #252525);
+      background-size: 400% 400%;
+      animation: bgShift 40s ease infinite;
+      color: #f0f0f0;
+      font-family: "Yu Gothic", sans-serif;
+      margin: 0;
+      padding: 2rem 1rem 4rem;
+    }
+
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      text-align: center;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeInDown 1.5s ease-out forwards;
+    }
+
+    .content {
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.8;
+      font-size: 1.05rem;
+      background-color: #1e1e1e;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      opacity: 0;
+      animation: fadeInUp 1.6s ease-out forwards;
+      animation-delay: 0.6s;
+    }
+
+    .content p {
+      margin-bottom: 1.2rem;
+    }
+
+    .signature {
+      text-align: right;
+      font-style: italic;
+      margin-top: 2rem;
+    }
+
+    @keyframes fadeInDown {
+      0% { transform: translateY(-20px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      0% { transform: translateY(20px); opacity: 0; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+
+    /* ハンバーガーメニュー */
+    .menu-toggle {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .menu-toggle div {
+      width: 25px;
+      height: 3px;
+      background-color: #fff;
+      margin: 5px 0;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -200px;
+      width: 200px;
+      height: 100%;
+      background-color: #2a2a2a;
+      padding-top: 60px;
+      transition: 0.3s;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+    }
+
+    .sidebar.open {
+      left: 0;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: #f0f0f0;
+      font-size: 1rem;
+    }
+
+    .sidebar a:hover {
+      background-color: #444;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ハンバーガーメニュー -->
+  <div class="menu-toggle" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <!-- サイドバー -->
+  <div class="sidebar" id="sidebarMenu">
+    <a href="home.html">🏠 ホーム</a>
+    <a href="write.html">🖋️ 言葉を置く</a>
+    <a href="read.html">👁️ 誰かの影を見る</a>
+    <a href="sleep.html">🌙 眠り箱</a>
+    <details style="margin-top: 1rem; padding: 0 1rem; color: #eee;">
+      <summary style="cursor: pointer;">📁 その他</summary>
+      <ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;">
+        <li><a href="about.html" style="color: #aaa;">はじめに</a></li>
+        <li><a href="howto.html" style="color: #aaa;">使い方ガイド</a></li>
+        <li><a href="hidden.html" style="color: #aaa;">非表示投稿一覧</a></li>
+        <li><a href="terms.html" style="color: #aaa;">利用規約・注意事項</a></li>
+
+      </ul>
+    </details>
+  </div>
+
+  <h1>はじめに</h1>
+
+  <div class="content">
+    <p>
+      こんにちは。「影差し」は、<strong>言葉にならない気持ちをそっと置いていく場所</strong>です。<br>
+      誰かに話すにはちょっと重い。SNSに投稿するにはちょっと恥ずかしい。<br>
+      そんな気持ちを、匿名で、非評価で、ただそのまま書き残すことができます。
+    </p>
+    <p>
+      私自身、苦しいときに自分の感情をどこかに出す場所があったら救われたと思った経験から、<strong>このアプリをつくりました</strong>。
+    </p>
+    <p>
+      あなたの気持ちが少しでも軽くなりますように。
+    </p>
+    <div class="signature">―― 作者より</div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("sidebarMenu").classList.toggle("open");
+    }
+  </script>
+</body>
+</html>

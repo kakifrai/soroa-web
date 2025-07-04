@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <title>非表示にした投稿 - 影差し</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background-color: #121212;
+      color: #f0f0f0;
+      font-family: "Yu Gothic", sans-serif;
+      margin: 0;
+      padding: 2rem 1rem 1rem;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    #hiddenContainer {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .post {
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      padding: 1rem;
+      margin-bottom: 1.2rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    .post-content {
+      margin-bottom: 1rem;
+      white-space: pre-wrap;
+      font-size: 1rem;
+    }
+
+    .post-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .post-actions button {
+      padding: 0.4rem 1rem;
+      background-color: #444;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .post-actions button:hover {
+      background-color: #666;
+    }
+
+    /* ハンバーガーメニュー：左上に固定 */
+    .menu-toggle {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      cursor: pointer;
+      z-index: 1001;
+      user-select: none;
+    }
+
+    .menu-toggle div {
+      width: 25px;
+      height: 3px;
+      background-color: #fff;
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* サイドバー：左側にスライド表示 */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -220px; /* ← 非表示状態 */
+      width: 220px;
+      height: 100%;
+      background-color: #2a2a2a;
+      padding-top: 60px;
+      transition: left 0.3s ease;
+      box-shadow: 2px 0 10px rgba(0,0,0,0.5);
+      z-index: 1000;
+      user-select: none;
+    }
+
+    .sidebar.open {
+      left: 0; /* ← 表示状態 */
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 14px 24px;
+      text-decoration: none;
+      color: #f0f0f0;
+      font-size: 1.1rem;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background-color: #444;
+    }
+
+    /* カスタム確認ダイアログ */
+    #customConfirmOverlay {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      justify-content: center;
+      align-items: center;
+    }
+
+    #customConfirmOverlay > div {
+      background: linear-gradient(145deg, #2b2b2b, #212121);
+      padding: 2rem 2.5rem;
+      border-radius: 12px;
+      text-align: center;
+      color: #eee;
+      max-width: 320px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      font-family: 'Yu Gothic', sans-serif;
+    }
+
+    #customConfirmMessage {
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    #customConfirmYes,
+    #customConfirmNo {
+      padding: 0.5rem 1.5rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.25s ease;
+    }
+
+    #customConfirmYes {
+      background-color: #4a90e2;
+      color: white;
+      margin-right: 1rem;
+      box-shadow: 0 4px 8px rgba(74,144,226,0.4);
+    }
+
+    #customConfirmYes:hover {
+      background-color: #357ABD;
+    }
+
+    #customConfirmNo {
+      background-color: #555555;
+      color: #ddd;
+      box-shadow: 0 4px 8px rgba(85,85,85,0.3);
+    }
+
+    #customConfirmNo:hover {
+      background-color: #777777;
+    }
+  </style>
+</head>
+<body>
+<!-- ハンバーガーメニュー -->
+<div class="menu-toggle" id="menuToggle">
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+
+<!-- サイドバー -->
+<div class="sidebar" id="sidebarMenu">
+  <a href="home.html">🏠 ホーム</a>
+  <a href="write.html">🖋️ 言葉を置く</a>
+  <a href="read.html">👁️ 誰かの影を見る</a>
+  <a href="sleep.html">🌙 眠り箱</a>
+ <details style="margin-top: 1rem; padding: 0 1rem; color: #eee;">
+      <summary style="cursor: pointer;">📁 その他</summary>
+      <ul style="list-style: none; padding-left: 0; margin-top: 0.5rem;">
+        <li><a href="about.html" style="color: #aaa;">はじめに</a></li>
+        <li><a href="howto.html" style="color: #aaa;">使い方ガイド</a></li>
+        <li><a href="hidden.html" style="color: #aaa;">非表示投稿一覧</a></li>
+        <li><a href="terms.html" style="color: #aaa;">利用規約・注意事項</a></li>
+
+      </ul>
+    </details>
+  </div>
+
+<script>
+  const sidebar = document.getElementById("sidebarMenu");
+  const menuToggle = document.getElementById("menuToggle");
+
+  document.addEventListener("DOMContentLoaded", () => {
+    // ページ読み込み時はサイドバー閉じる（初期状態）
+    sidebar.classList.remove("open");
+  });
+
+  menuToggle.addEventListener("click", () => {
+    sidebar.classList.toggle("open");
+  });
+</script>
+
+
+
+  <h1>🚫 非表示にした投稿</h1>
+  <div id="hiddenContainer"></div>
+
+  <!-- 通知 -->
+  <div id="notification"></div>
+
+  <!-- カスタム確認ダイアログ -->
+  <div id="customConfirmOverlay">
+    <div>
+      <div id="customConfirmMessage">本当に実行しますか？</div>
+      <button id="customConfirmYes">はい</button>
+      <button id="customConfirmNo">いいえ</button>
+    </div>
+  </div>
+
+  <script type="module" src="hidden.js"></script>
+
+
+
+</body>
+</html>
